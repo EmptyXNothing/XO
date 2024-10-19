@@ -1,0 +1,52 @@
+*{
+   margin: 0; 
+   padding: 0;
+}
+
+.part-logo{
+    
+}
+
+.little-symbol{
+
+}
+
+.logo{
+    display: flex;
+    justify-content: left;
+    user-select: none;
+}
+
+header{
+    display: flex;
+    padding: 1em;
+    background-color: darkgreen;
+    justify-content: center;
+}
+
+.game-name{
+
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 80vh;
+}
+
+.game{
+    display: grid;
+    width: 60vw;
+    height: 60vh;
+    border: 1px solid black;
+    border-collapse: collapse;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: aquamarine;
+}
+
+.square{
+    border: 1px solid black;
+}
