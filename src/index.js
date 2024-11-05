@@ -35,6 +35,7 @@ const checkWin = () => {
     
   };
 };
+ 
 
 // обходим все элементы
 state.squares.forEach(square => {
@@ -49,8 +50,6 @@ state.squares.forEach(square => {
 
       // изменение хода
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
-
-
       indicatorMove.textContent = state.currentMove;
     }
   });
