@@ -17,6 +17,7 @@ const state = {
     { text: '', isClicked: false },
   ],
   currentMove: 'X',
+  status: 'game',
 };
 
 const combo = [
@@ -28,12 +29,26 @@ const combo = [
   [2, 5, 8],
   [0, 4, 8],
   [6, 4, 2],
-]
+];
 
-const checkWin = () => {
+const isWin = () => {
+  const squares = document.querySelectorAll('.square');
   for (let comb of combo){
-    
+    let count = 0;
+    if (squares[comb[0]].textContent === state.currentMove){
+      count+=1;
+    }
+    if (squares[comb[1]].textContent === state.currentMove){
+      count+=1;
+    }
+    if (squares[comb[2]].textContent === state.currentMove){
+      count+=1;
+    }
+    if (count === 3){
+      return true;
+    }
   };
+  return false;
 };
  
 
@@ -44,10 +59,13 @@ state.squares.forEach(square => {
   div.textContent = square.text;
   game.append(div);
   div.addEventListener('click', ()=>{
-    if (square.isClicked === false){
+    if (square.isClicked === false && state.status === 'game'){
       square.isClicked = true;
       div.textContent = state.currentMove;
-
+      if (isWin()){
+        state.status = 'finish'
+        console.log('Победа')
+      };
       // изменение хода
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
       indicatorMove.textContent = state.currentMove;
