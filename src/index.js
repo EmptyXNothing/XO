@@ -56,6 +56,7 @@ const isWin = () => {
   const squares = document.querySelectorAll('.square');
   for (const combination of combinations) {
     const squaresCurrentMove = combination.filter(i => squares[i].textContent === state.currentMove);
+    console.log(squaresCurrentMove)
     if (squaresCurrentMove.length === 3) {
       return true;
     }
@@ -74,8 +75,24 @@ state.squares.forEach(square => {
       square.isClicked = true;
       div.textContent = state.currentMove;
       if (isWin()){
+        game.innerHTML = ''
         state.status = 'finish'
-        console.log('Победа')
+        const span = document.createElement('span')
+        span.textContent = 'Победа ' + state.currentMove
+        game.append(span)
+        game.style.display = 'flex'
+        game.style.background = 'white'
+        game.style.justifyContent = 'center'
+        game.style.border = 'none'
+        game.style.alignItems = 'center'
+        span.style.fontSize = '32px'
+        const button = document.createElement('button')
+        game.append(button)
+        button.textContent = 'Играть снова'
+        game.style.flexDirection = 'column'
+        button.style.padding = '10px'
+        button.style.fontSize = '18px'
+        
       };
       // изменение хода
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
