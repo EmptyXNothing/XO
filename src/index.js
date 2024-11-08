@@ -20,7 +20,7 @@ const state = {
   status: 'game',
 };
 
-const combo = [
+const combinations = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -31,26 +31,37 @@ const combo = [
   [6, 4, 2],
 ];
 
+// const isWin = () => {
+//   const squares = document.querySelectorAll('.square');
+//   for (let comb of combo){
+//     let count = 0;
+//     if (squares[comb[0]].textContent === state.currentMove){
+//       count+=1;
+//     }
+//     if (squares[comb[1]].textContent === state.currentMove){
+//       count+=1;
+//     }
+//     if (squares[comb[2]].textContent === state.currentMove){
+//       count+=1;
+//     }
+//     if (count === 3){
+//       return true;
+//     }
+//   };
+//   return false;
+// };
+
+
 const isWin = () => {
   const squares = document.querySelectorAll('.square');
-  for (let comb of combo){
-    let count = 0;
-    if (squares[comb[0]].textContent === state.currentMove){
-      count+=1;
-    }
-    if (squares[comb[1]].textContent === state.currentMove){
-      count+=1;
-    }
-    if (squares[comb[2]].textContent === state.currentMove){
-      count+=1;
-    }
-    if (count === 3){
+  for (const combination of combinations) {
+    const squaresCurrentMove = combination.filter(i => squares[i].textContent === state.currentMove);
+    if (squaresCurrentMove.length === 3) {
       return true;
     }
   };
   return false;
-};
- 
+}
 
 // обходим все элементы
 state.squares.forEach(square => {

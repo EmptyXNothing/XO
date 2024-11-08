@@ -64,3 +64,17 @@ main{
     align-items: center;
     font-size: 40px;
 }
+
+@media (max-width: 500px) {
+    .game {
+        width: 75vw;
+        height: 75vw;
+    }
+}
+
+@media (max-width: 700px) {
+    .game {
+        width: 60vw;
+        height: 60vw;
+    }
+}
