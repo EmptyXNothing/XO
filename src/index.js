@@ -4,9 +4,14 @@ const game = document.querySelector(".game");
 const indicatorMove = document.querySelector(".current-move");
 const button = document.createElement('button');
 button.addEventListener('click', () => createSquares());
+button.classList.add('btn')
 
 
 const createSquares = () => {
+  state.currentMove = 'X'
+  indicatorMove.textContent = state.currentMove;
+  state.status = 'game'
+  game.innerHTML = ''
   state.squares.forEach(square => {
     const div = document.createElement("div");
     div.classList.add("square");
@@ -77,21 +82,25 @@ const isWin = () => {
 }
 
 const renderWin = () => {
+  indicatorMove.textContent = 'Игра окончена'
   game.innerHTML = ''
   state.status = 'finish'
   const span = document.createElement('span')
   span.textContent = 'Победа ' + state.currentMove
   game.append(span)
-  game.style.display = 'flex'
-  game.style.background = 'white'
-  game.style.justifyContent = 'center'
-  game.style.border = 'none'
-  game.style.alignItems = 'center'
+  // game.style.display = 'flex'
+  // game.style.background = 'white'
+  // game.style.justifyContent = 'center'
+  // game.style.border = 'none'
+  // game.style.alignItems = 'center'
   span.style.fontSize = '32px'
+  game.append(button)
+  button.textContent = 'Играть снова'
 }
 
 game.addEventListener('click', (e) => {
   const square = e.target;
+  console.log(e.target)
   if (square.classList[0] === 'square') {
     if (square.textContent === '' && state.status === 'game') {
       square.textContent = state.currentMove;
@@ -100,6 +109,9 @@ game.addEventListener('click', (e) => {
       }
 
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
+      if (state.status === 'game'){
+        indicatorMove.textContent = state.currentMove;
+      }
     }
   }
   
