@@ -2,6 +2,18 @@ import './style.css';
 // все компоненты
 const game = document.querySelector(".game");
 const indicatorMove = document.querySelector(".current-move");
+const button = document.createElement('button');
+button.addEventListener('click', () => createSquares());
+
+
+const createSquares = () => {
+  state.squares.forEach(square => {
+    const div = document.createElement("div");
+    div.classList.add("square");
+    div.textContent = square.text;
+    game.append(div);
+  })
+}
 
 // состояние сайта
 const state = {
@@ -64,39 +76,69 @@ const isWin = () => {
   return false;
 }
 
-// обходим все элементы
-state.squares.forEach(square => {
-  const div = document.createElement("div");
-  div.classList.add("square");
-  div.textContent = square.text;
-  game.append(div);
-  div.addEventListener('click', ()=>{
-    if (square.isClicked === false && state.status === 'game'){
-      square.isClicked = true;
-      div.textContent = state.currentMove;
-      if (isWin()){
-        game.innerHTML = ''
-        state.status = 'finish'
-        const span = document.createElement('span')
-        span.textContent = 'Победа ' + state.currentMove
-        game.append(span)
-        game.style.display = 'flex'
-        game.style.background = 'white'
-        game.style.justifyContent = 'center'
-        game.style.border = 'none'
-        game.style.alignItems = 'center'
-        span.style.fontSize = '32px'
-        const button = document.createElement('button')
-        game.append(button)
-        button.textContent = 'Играть снова'
-        game.style.flexDirection = 'column'
-        button.style.padding = '10px'
-        button.style.fontSize = '18px'
-        
-      };
-      // изменение хода
+const renderWin = () => {
+  game.innerHTML = ''
+  state.status = 'finish'
+  const span = document.createElement('span')
+  span.textContent = 'Победа ' + state.currentMove
+  game.append(span)
+  game.style.display = 'flex'
+  game.style.background = 'white'
+  game.style.justifyContent = 'center'
+  game.style.border = 'none'
+  game.style.alignItems = 'center'
+  span.style.fontSize = '32px'
+}
+
+game.addEventListener('click', (e) => {
+  const square = e.target;
+  if (square.classList[0] === 'square') {
+    if (square.textContent === '' && state.status === 'game') {
+      square.textContent = state.currentMove;
+      if (isWin()) {
+        renderWin();
+      }
+
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
-      indicatorMove.textContent = state.currentMove;
     }
-  });
+  }
+  
 });
+
+createSquares();
+// обходим все элементы
+// state.squares.forEach(square => {
+//   const div = document.createElement("div");
+//   div.classList.add("square");
+//   div.textContent = square.text;
+//   game.append(div);
+//   div.addEventListener('click', ()=>{
+//     if (square.isClicked === false && state.status === 'game'){
+//       square.isClicked = true;
+//       div.textContent = state.currentMove;
+//       if (isWin()){
+//         game.innerHTML = ''
+//         state.status = 'finish'
+//         const span = document.createElement('span')
+//         span.textContent = 'Победа ' + state.currentMove
+//         game.append(span)
+//         game.style.display = 'flex'
+//         game.style.background = 'white'
+//         game.style.justifyContent = 'center'
+//         game.style.border = 'none'
+//         game.style.alignItems = 'center'
+//         span.style.fontSize = '32px'
+//         const button = document.createElement('button')
+//         game.append(button)
+//         button.textContent = 'Играть снова'
+//         game.style.flexDirection = 'column'
+//         button.style.padding = '10px'
+//         button.style.fontSize = '18px'
+        
+//       };
+//       // изменение хода
+//       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
+//       indicatorMove.textContent = state.currentMove;
+//     }
+//   });
+// });
