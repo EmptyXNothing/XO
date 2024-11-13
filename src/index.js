@@ -64,16 +64,26 @@ const isWin = () => {
   return false;
 }
 
-// const is_draw = () => {
+const isDraw = () => {
+  for (const square of state.squares) {
+    if (square.item.textContent === ''){
+      return false
+    }
+  }
+  return true
+}
 
-// }
-
-const renderWin = () => {
+const renderFinish = (isWinner = true) => {
   indicatorMove.textContent = 'game over'
   game.innerHTML = ''
   state.status = 'finish'
   const span = document.createElement('span')
-  span.textContent = 'Win ' + state.currentMove
+  if (isWinner === false){
+    span.textContent = 'Draw'
+  }
+  else{
+    span.textContent = 'Win ' + state.currentMove
+  }
   game.append(span)
   const div = document.createElement('div');
   div.classList.add('win');
@@ -92,7 +102,10 @@ game.addEventListener('click', (e) => {
     if (square.textContent === '' && state.status === 'game') {
       square.textContent = state.currentMove;
       if (isWin()) {
-        renderWin();
+        renderFinish();
+      }
+      if (isDraw()){
+        renderFinish(false)
       }
       
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
