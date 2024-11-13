@@ -8,6 +8,7 @@ button.classList.add('btn')
 
 
 const createSquares = () => {
+  game.style.display = 'grid';
   state.currentMove = 'X'
   indicatorMove.textContent = state.currentMove;
   state.status = 'game'
@@ -15,7 +16,7 @@ const createSquares = () => {
   state.squares.forEach(square => {
     const div = document.createElement("div");
     div.classList.add("square");
-    div.textContent = square.text;
+    square.item = div;
     game.append(div);
   })
 }
@@ -23,15 +24,15 @@ const createSquares = () => {
 // состояние сайта
 const state = {
   squares: [
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
-    { text: '', isClicked: false },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
+    { isClicked: false, item: null },
   ],
   currentMove: 'X',
   status: 'game',
@@ -48,29 +49,11 @@ const combinations = [
   [6, 4, 2],
 ];
 
-// const isWin = () => {
-//   const squares = document.querySelectorAll('.square');
-//   for (let comb of combo){
-//     let count = 0;
-//     if (squares[comb[0]].textContent === state.currentMove){
-//       count+=1;
-//     }
-//     if (squares[comb[1]].textContent === state.currentMove){
-//       count+=1;
-//     }
-//     if (squares[comb[2]].textContent === state.currentMove){
-//       count+=1;
-//     }
-//     if (count === 3){
-//       return true;
-//     }
-//   };
-//   return false;
-// };
 
 
 const isWin = () => {
   const squares = document.querySelectorAll('.square');
+  
   for (const combination of combinations) {
     const squaresCurrentMove = combination.filter(i => squares[i].textContent === state.currentMove);
     console.log(squaresCurrentMove)
@@ -81,21 +64,25 @@ const isWin = () => {
   return false;
 }
 
+// const is_draw = () => {
+
+// }
+
 const renderWin = () => {
-  indicatorMove.textContent = 'Игра окончена'
+  indicatorMove.textContent = 'game over'
   game.innerHTML = ''
   state.status = 'finish'
   const span = document.createElement('span')
-  span.textContent = 'Победа ' + state.currentMove
+  span.textContent = 'Win ' + state.currentMove
   game.append(span)
-  // game.style.display = 'flex'
-  // game.style.background = 'white'
-  // game.style.justifyContent = 'center'
-  // game.style.border = 'none'
-  // game.style.alignItems = 'center'
+  const div = document.createElement('div');
+  div.classList.add('win');
+  div.append(span);
+  div.append(button);
   span.style.fontSize = '32px'
-  game.append(button)
-  button.textContent = 'Играть снова'
+  game.style.display = 'flex'
+  game.append(div);
+  button.textContent = 'Retry'
 }
 
 game.addEventListener('click', (e) => {
@@ -107,7 +94,7 @@ game.addEventListener('click', (e) => {
       if (isWin()) {
         renderWin();
       }
-
+      
       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
       if (state.status === 'game'){
         indicatorMove.textContent = state.currentMove;
@@ -118,39 +105,3 @@ game.addEventListener('click', (e) => {
 });
 
 createSquares();
-// обходим все элементы
-// state.squares.forEach(square => {
-//   const div = document.createElement("div");
-//   div.classList.add("square");
-//   div.textContent = square.text;
-//   game.append(div);
-//   div.addEventListener('click', ()=>{
-//     if (square.isClicked === false && state.status === 'game'){
-//       square.isClicked = true;
-//       div.textContent = state.currentMove;
-//       if (isWin()){
-//         game.innerHTML = ''
-//         state.status = 'finish'
-//         const span = document.createElement('span')
-//         span.textContent = 'Победа ' + state.currentMove
-//         game.append(span)
-//         game.style.display = 'flex'
-//         game.style.background = 'white'
-//         game.style.justifyContent = 'center'
-//         game.style.border = 'none'
-//         game.style.alignItems = 'center'
-//         span.style.fontSize = '32px'
-//         const button = document.createElement('button')
-//         game.append(button)
-//         button.textContent = 'Играть снова'
-//         game.style.flexDirection = 'column'
-//         button.style.padding = '10px'
-//         button.style.fontSize = '18px'
-        
-//       };
-//       // изменение хода
-//       state.currentMove = state.currentMove === 'X' ? 'O' : 'X';
-//       indicatorMove.textContent = state.currentMove;
-//     }
-//   });
-// });
